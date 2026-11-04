@@ -1,0 +1,43 @@
+
+name: Snyk Security Gates
+
+on:
+    push:
+        branches:
+            - main
+            - test-scenario-2
+    pull_request:
+        branches:
+            - main
+    workflow_dispatch:
+
+permissions:
+    contents: read
+    id-token: write
+    security-events: write
+
+jobs:
+    security:
+        name: Snyk Security Scans
+        runs-on: ubuntu-latest
+
+        env:
+            SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+            SNYK_API: https://api.au.snyk.io
+
+        steps:
+            - name: Checkout Repository
+              uses: actions/checkout@v4
+            
+            - name: Run Snyk Open Source Scan
+              uses: snyk/actions/node@master
+              continue-on-error: true
+              with:
+                args: --all-projects --severity-treshold=high
+            
+            - name: Setup Snyk CLI
+              uses: snyk/actions/setup@master
+
+            - name: Run Snyk Code Scan
+              continue-on-error: true
+              run: snyk code test --severity-threshold=high
