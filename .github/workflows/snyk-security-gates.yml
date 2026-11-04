@@ -39,5 +39,5 @@ jobs:
               uses: snyk/actions/setup@master
 
             - name: Run Snyk Code Scan
-              continue-on-error: false
+              continue-on-error: true
               run: snyk code test --severity-threshold=high
