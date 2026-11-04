@@ -2,7 +2,7 @@
 .env
 .env.*
 !.env.example
-ctf.key
+#ctf.key
 # App
 node_modules/
 *.sqlite
