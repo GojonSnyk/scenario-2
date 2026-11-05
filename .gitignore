@@ -3,6 +3,7 @@
 .env.*
 !.env.example
 #ctf.key
+
 # App
 node_modules/
 *.sqlite
